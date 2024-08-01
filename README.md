@@ -13,7 +13,7 @@ This project is a Node.js application that connects to a MongoDB database. The a
 
 ## Project Architecture
 
-```
+```mermaid
 graph TD
     A[Node.js Application] -->|Connects to| B(MongoDB)
     B --> C[Admin User Management]
@@ -41,7 +41,7 @@ Make sure Docker and Docker Compose are installed on your machine.
 ### 2. Configure Docker and MongoDB
 
 **`docker-compose.yml`**:
-```
+```yml
 version: '3.8'
 
 services:
@@ -61,7 +61,7 @@ volumes:
 ```
 
 **`.env`**:
-```
+```yml
 MONGO_INITDB_ROOT_USERNAME=notroot
 MONGO_INITDB_ROOT_PASSWORD=notexample
 ```
@@ -69,7 +69,7 @@ MONGO_INITDB_ROOT_PASSWORD=notexample
 ### 3. Create Node.js Script
 
 **`index.js`**:
-```
+```js
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
@@ -99,32 +99,14 @@ run().catch(console.dir);
 ### 4. Running the Application
 
 **Start Docker Containers**:
-```
+```bash
 docker-compose up -d
 ```
 
 **Run Node.js Script**:
-```
+```bash
 node index.js
 ```
-
-### 5. Verify Admin Users
-
-Connect to MongoDB and verify the admin users with the following command:
-```
-docker exec -it mongodb mongo -u notroot -p notexample --authenticationDatabase admin
-```
-
-Then list users:
-```
-use admin
-db.system.users.find().pretty()
-```
-
-## Troubleshooting
-
-- **Memory Issues**: Ensure Docker has sufficient RAM allocated.
-- **Connection Errors**: Verify that the `.env` variables are correctly set and Docker containers are running.
 
 ## Conclusion
 
