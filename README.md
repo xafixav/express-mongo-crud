@@ -1,15 +1,19 @@
-Node.js and MongoDB CRUD Application
-Project Overview
-This project is a Node.js application that connects to a MongoDB database. The application uses Docker for containerization and dotenv to manage environment variables. It includes CRUD operations with MongoDB and demonstrates how to list administrator users.
+# Node.js and MongoDB CRUD Application
 
-Project Structure
-Node.js Application: Handles CRUD operations with MongoDB.
-MongoDB: Stores application data and administrator user information.
-Docker: Manages containerization and environment setup.
-Environment Variables: Managed through a .env file for configuration.
-Project Architecture
-mermaid
-Copiar código
+## Project Overview
+
+This project is a Node.js application that connects to a MongoDB database. The application uses Docker for containerization and `dotenv` to manage environment variables. It includes CRUD operations with MongoDB and demonstrates how to list administrator users.
+
+## Project Structure
+
+- **Node.js Application**: Handles CRUD operations with MongoDB.
+- **MongoDB**: Stores application data and administrator user information.
+- **Docker**: Manages containerization and environment setup.
+- **Environment Variables**: Managed through a `.env` file for configuration.
+
+## Project Architecture
+
+```
 graph TD
     A[Node.js Application] -->|Connects to| B(MongoDB)
     B --> C[Admin User Management]
@@ -20,21 +24,24 @@ graph TD
     E -->|Holds| F[Environment Variables]
     B -->|Stores| G[Data]
     G -->|CRUD Operations| A
-Setup Instructions
-1. Install Dependencies
-Node.js Dependencies:
+```
 
-sh
-Copiar código
+## Setup Instructions
+
+### 1. Install Dependencies
+
+**Node.js Dependencies**:
+```
 npm install mongodb dotenv
-Docker:
+```
+
+**Docker**:
 Make sure Docker and Docker Compose are installed on your machine.
 
-2. Configure Docker and MongoDB
-docker-compose.yml:
+### 2. Configure Docker and MongoDB
 
-yaml
-Copiar código
+**`docker-compose.yml`**:
+```
 version: '3.8'
 
 services:
@@ -51,17 +58,18 @@ services:
 
 volumes:
   mongodb_data:
-.env:
+```
 
-env
-Copiar código
+**`.env`**:
+```
 MONGO_INITDB_ROOT_USERNAME=notroot
 MONGO_INITDB_ROOT_PASSWORD=notexample
-3. Create Node.js Script
-index.js:
+```
 
-js
-Copiar código
+### 3. Create Node.js Script
+
+**`index.js`**:
+```
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
@@ -86,31 +94,38 @@ async function run() {
 }
 
 run().catch(console.dir);
-4. Running the Application
-Start Docker Containers:
+```
 
-sh
-Copiar código
+### 4. Running the Application
+
+**Start Docker Containers**:
+```
 docker-compose up -d
-Run Node.js Script:
+```
 
-sh
-Copiar código
+**Run Node.js Script**:
+```
 node index.js
-5. Verify Admin Users
+```
+
+### 5. Verify Admin Users
+
 Connect to MongoDB and verify the admin users with the following command:
-
-sh
-Copiar código
+```
 docker exec -it mongodb mongo -u notroot -p notexample --authenticationDatabase admin
-Then list users:
+```
 
-js
-Copiar código
+Then list users:
+```
 use admin
 db.system.users.find().pretty()
-Troubleshooting
-Memory Issues: Ensure Docker has sufficient RAM allocated.
-Connection Errors: Verify that the .env variables are correctly set and Docker containers are running.
-Conclusion
+```
+
+## Troubleshooting
+
+- **Memory Issues**: Ensure Docker has sufficient RAM allocated.
+- **Connection Errors**: Verify that the `.env` variables are correctly set and Docker containers are running.
+
+## Conclusion
+
 This project demonstrates how to set up a Node.js application with MongoDB using Docker and environment variables. It provides a foundation for developing and managing a CRUD application with MongoDB.
