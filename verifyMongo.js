@@ -2,9 +2,9 @@ const { MongoClient } = require('mongodb');
 require('dotenv').config();
 
 // Update the URI with the correct credentials
-const uri = `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@localhost:27017/admin`;
+const uri = process.env.MONGO_URI;
 
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(uri);
 
 async function run() {
   try {
