@@ -1,5 +1,7 @@
 import { expect } from 'chai';
 import { MongoClient } from 'mongodb';
+import { app } from '../app.js';
+import request from 'supertest';
 
 
 describe('Enviroment Variables', () => {
@@ -22,6 +24,30 @@ describe('Database Connection', () => {
         } finally {
             await db.close();
         }
+    });
+});
+
+describe('App endpoints', () => {
+    let server;
+
+    before(() => {
+        const PORT = process.env.APP_PORT_NUMBER;
+        server = app.listen(PORT, () => {
+            console.log(`app listening to port: ${PORT}`);
+        });
+    });
+
+    afterEach(() => {
+        server.close();
+    })
+
+    it('should repply with a hello world', async () => {
+        const response = await request(server)
+        .get('/')
+        .expect('Content-Type', /text/)
+        .expect(200);
+
+        expect(response.text).to.equal('hello world');
     });
 });
 
